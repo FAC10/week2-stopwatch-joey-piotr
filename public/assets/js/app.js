@@ -2,45 +2,51 @@
 // *******************************************************************
 // State
 // *******************************************************************
-let currentTimer = 35999600;
-let interval;
 let isRunning = false;
+let animationRequestId;
+let startTime = 0;
+let passedTime = 0;
+let stoppedTime = 0;
+
 
 // *******************************************************************
 // Control
 // *******************************************************************
-function runTimer() {
-  // if (isRunning) { return; }
-  console.log('started');
-  // isRunning = true;
-  currentTimer++;
-  showTimer(currentTimer);
-  window.requestAnimationFrame(runTimer);
-
-  //
-  // interval = setInterval(() => {
-  //   currentTimer++;
-  //   showTimer(currentTimer);
-  // }, 10);
+function startTimer() {
+  if (isRunning) { return; }
+  isRunning = true;
+  startTime = getCurrentMs() - stoppedTime;
+  runTimer();
 }
 
-// function handleUpdate() {
-//   currentTimer++;
-//   showTimer(currentTimer);
-// }
+
+function getCurrentMs() {
+  return Date.now();
+}
+
+
+function runTimer() {
+  passedTime = getCurrentMs() - startTime;
+  showTimer(passedTime);
+  animationRequestId = window.requestAnimationFrame(runTimer);
+}
+
 
 function stopTimer() {
   if (!isRunning) { return; }
-  clearInterval(interval);
-  // console.log('pause');
+  isRunning = false;
+  stoppedTime = getCurrentMs() - startTime;
+
+  window.cancelAnimationFrame(animationRequestId);
+  animationRequestId = undefined;
 }
 
+
 function resetTimer() {
-  if (!isRunning) { return; }
-  isRunning = false;
   stopTimer();
-  currentTimer = 0;
-  showTimer(currentTimer);
+  stoppedTime = 0;
+  startTime = 0;
+  showTimer(startTime);
 }
 
 
@@ -55,22 +61,22 @@ function addEventListeners() {
   const pauseDOM = document.querySelector('.controls__btn--pause');
   const resetDOM = document.querySelector('.controls__btn--reset');
 
-  startDOM.addEventListener('click', runTimer);
+  startDOM.addEventListener('click', startTimer);
   pauseDOM.addEventListener('click', stopTimer);
   resetDOM.addEventListener('click', resetTimer);
 }
 
 
-function showTimer(centiSeconds) {
-  displayDOM.textContent = formatDisplay(centiSeconds);
+function showTimer(miliSec) {
+  displayDOM.textContent = formatDisplay(miliSec);
 }
 
 
-function formatDisplay(centiSeconds) {
-  const centiSec = centiSeconds % 100;
-  const sec  = Math.floor((centiSeconds / 100) % 60);
-  const min  = Math.floor((centiSeconds / (100 * 60)) % 60);
-  const hour = Math.floor((centiSeconds / (100 * 60 * 60)) % 100);
+function formatDisplay(miliSec) {
+  const centiSec = Math.floor((miliSec / 10) % 100);
+  const sec      = Math.floor((miliSec / 1000) % 60);
+  const min      = Math.floor((miliSec / (1000 * 60)) % 60);
+  const hour     = Math.floor((miliSec / (1000 * 60 * 60)) % 100);
   return `${padWithZero(hour)}:${padWithZero(min)}:${padWithZero(sec)}:${padWithZero(centiSec)}`;
 }
 
