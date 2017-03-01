@@ -6,7 +6,7 @@ let isRunning = false;
 let animationRequestId;
 let startTime = 0;
 let passedTime = 0;
-let currentTime = 0;
+let stoppedTime = 0;
 
 
 // *******************************************************************
@@ -15,9 +15,7 @@ let currentTime = 0;
 function startTimer() {
   if (isRunning) { return; }
   isRunning = true;
-  if (startTime === 0) {
-    startTime = getCurrentMs() + passedTime;
-  }
+  startTime = getCurrentMs() - stoppedTime;
   runTimer();
 }
 
@@ -28,26 +26,25 @@ function getCurrentMs() {
 
 
 function runTimer() {
-  currentTime = getCurrentMs();
-  passedTime = currentTime - startTime;
+  passedTime = getCurrentMs() - startTime;
   showTimer(passedTime);
   animationRequestId = window.requestAnimationFrame(runTimer);
 }
 
 
-
 function stopTimer() {
   if (!isRunning) { return; }
   isRunning = false;
-  console.log(passedTime);
+  stoppedTime = getCurrentMs() - startTime;
 
   window.cancelAnimationFrame(animationRequestId);
   animationRequestId = undefined;
 }
 
+
 function resetTimer() {
-  if (!isRunning) { return; }
   stopTimer();
+  stoppedTime = 0;
   startTime = 0;
   showTimer(startTime);
 }

@@ -13,7 +13,8 @@ html {
 body {
   display: flex;
   justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  /*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";*/
+  font-family: Consolas;
   color: #555;
   /*border: 1px solid blue;*/
   height: 100%;
@@ -34,14 +35,15 @@ body {
 
 .display__clock {
   width: 70%;
-  /*border: 1px solid #000;*/
+  border: 1px solid #000;
 
 }
 
 .display__time {
   width: 100%;
   font-size: 3rem;
-  /*border: 1px solid yellow;*/
+  text-align: center;
+  border: 1px solid yellow;
 }
 
 .controls {
