@@ -1,6 +1,6 @@
-# Vanilla JavaScript App Boilerplate
+# Stopwatch
 
-App demonstrating ...
+A practical stopwatch and timer to get the job done. Perfect for every timing situation including cooking, sports, games and work tasks.
 
 Live version: https://REPO.herokuapp.com
 
@@ -8,12 +8,13 @@ Live version: https://REPO.herokuapp.com
 
 ## Tech stack
 * Node
-* Express
-* Heroku
-* Browsersync
 * Vanilla JavaScript
 * ES6
 * Flexbox
+* Jest
+* Browsersync
+* Express
+* Heroku
 
 ## Getting started
 
