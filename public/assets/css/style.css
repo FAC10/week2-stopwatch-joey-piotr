@@ -14,14 +14,16 @@ body {
   display: flex;
   justify-content: center;
   /*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";*/
-  font-family: Consolas;
+  font-family: 'Droid Sans Mono', monospace;
+  font-weight: 100;
   color: #555;
   /*border: 1px solid blue;*/
   height: 100%;
 }
 
 .app {
-  border: 1px solid red;
+  background-color: rgb(32, 147, 78);
+  /*border: 1px solid red;*/
   width: 100%;
 }
 
@@ -34,24 +36,80 @@ body {
 }
 
 .display__clock {
-  width: 70%;
-  border: 1px solid #000;
+  position: relative;
+  width: 100%;
+  /*border: 1px solid #000;*/
+}
 
+.display__clock:after {
+  display: block;
+  margin-top: 100%;
+  content: '';
+}
+
+.display__wrapper {
+  display: flex;
+  /*justify-content: center;*/
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  width: 77%;
+  height: 77%;
+  border-radius: 50%;
+  border: 10px solid rgb(24, 112, 59);
 }
 
 .display__time {
   width: 100%;
-  font-size: 3rem;
+  color: white;
+  font-size: 2rem;
   text-align: center;
-  border: 1px solid yellow;
+}
+
+@media screen and (min-width: 30em) {
+  .display__time {
+    font-size: 3rem;
+  }
 }
 
 .controls {
   display: flex;
-  border: 1px solid purple;
   height: 10%;
+  box-shadow: 0px -8px 14px -1px rgba(0,0,0,0.35)
 }
 
 .controls__btn {
   flex: 1;
+  background-color: rgb(32, 147, 78);
+  color: white;
+  border: 1px solid rgb(24, 112, 59);
+  font-size: 1.2rem;
+  outline: none;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 30em) {
+  .controls__btn {
+    font-size: 1.7rem;
+  }
+}
+
+.controls__btn:hover {
+  outline: none;
+}
+
+.controls__btn:focus {
+  outline: none;
+}
+
+.controls__btn:active {
+  outline: none;
+  background-color: rgb(24, 112, 59);
 }

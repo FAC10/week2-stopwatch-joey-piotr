@@ -6,7 +6,6 @@ let isRunning = false;
 let animationRequestId;
 let startTime = 0;
 let passedTime = 0;
-let stoppedTime = 0;
 
 
 // *******************************************************************
@@ -15,18 +14,13 @@ let stoppedTime = 0;
 function startTimer() {
   if (isRunning) { return; }
   isRunning = true;
-  startTime = getCurrentMs() - stoppedTime;
+  startTime = Date.now() - passedTime;
   runTimer();
 }
 
 
-function getCurrentMs() {
-  return Date.now();
-}
-
-
 function runTimer() {
-  passedTime = getCurrentMs() - startTime;
+  passedTime = Date.now() - startTime;
   showTimer(passedTime);
   animationRequestId = window.requestAnimationFrame(runTimer);
 }
@@ -35,7 +29,6 @@ function runTimer() {
 function stopTimer() {
   if (!isRunning) { return; }
   isRunning = false;
-  stoppedTime = getCurrentMs() - startTime;
 
   window.cancelAnimationFrame(animationRequestId);
   animationRequestId = undefined;
@@ -44,10 +37,15 @@ function stopTimer() {
 
 function resetTimer() {
   stopTimer();
-  stoppedTime = 0;
+  passedTime = 0;
   startTime = 0;
   showTimer(startTime);
 }
+
+//
+// function getCurrentMs() {
+//   return Date.now();
+// }
 
 
 
@@ -77,7 +75,7 @@ function formatDisplay(miliSec) {
   const sec      = Math.floor((miliSec / 1000) % 60);
   const min      = Math.floor((miliSec / (1000 * 60)) % 60);
   const hour     = Math.floor((miliSec / (1000 * 60 * 60)) % 100);
-  return `${padWithZero(hour)}:${padWithZero(min)}:${padWithZero(sec)}:${padWithZero(centiSec)}`;
+  return `${padWithZero(hour)}:${padWithZero(min)}:${padWithZero(sec)}.${padWithZero(centiSec)}`;
 }
 
 
