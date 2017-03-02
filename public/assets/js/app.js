@@ -14,13 +14,13 @@ let passedTime = 0;
 function startTimer() {
   if (isRunning) { return; }
   isRunning = true;
-  startTime = Date.now() - passedTime;
+  startTime = getCurrentMs() - passedTime;
   runTimer();
 }
 
 
 function runTimer() {
-  passedTime = Date.now() - startTime;
+  passedTime = getCurrentMs() - startTime;
   showTimer(passedTime);
   animationRequestId = window.requestAnimationFrame(runTimer);
 }
@@ -29,41 +29,65 @@ function runTimer() {
 function stopTimer() {
   if (!isRunning) { return; }
   isRunning = false;
-
   window.cancelAnimationFrame(animationRequestId);
   animationRequestId = undefined;
 }
 
 
 function resetTimer() {
+  if (!isRunning) { return; }
   stopTimer();
   passedTime = 0;
   startTime = 0;
   showTimer(startTime);
 }
 
-//
-// function getCurrentMs() {
-//   return Date.now();
-// }
+
+function getCurrentMs() {
+  return Date.now();
+}
 
 
 
 // *******************************************************************
 // View
 // *******************************************************************
-const displayDOM = document.querySelector('.display__time');
-
-function addEventListeners() {
+(function addEventListeners() {
   const startDOM = document.querySelector('.controls__btn--start');
   const pauseDOM = document.querySelector('.controls__btn--pause');
   const resetDOM = document.querySelector('.controls__btn--reset');
 
+  const controlsDOM = document.querySelector('.controls');
+
   startDOM.addEventListener('click', startTimer);
   pauseDOM.addEventListener('click', stopTimer);
   resetDOM.addEventListener('click', resetTimer);
+
+  ['focusin', 'focusout', 'mouseover'].forEach(event => {
+    if (event === 'mouseover') {
+      controlsDOM.addEventListener(event, removeEvent, { once: true });
+    } else {
+      controlsDOM.addEventListener(event, handleFocus);
+    }
+  });
+}());
+
+
+function handleFocus(e) {
+  console.log('focus');
+  if (e.target.nodeName === 'BUTTON'); {
+    e.target.classList.toggle('controls__btn--focus');
+  }
 }
 
+
+function removeEvent(e) {
+  this.removeEventListener('focusin', handleFocus);
+  this.removeEventListener('focusout', handleFocus);
+}
+
+
+const displayDOM = document.querySelector('.display__time');
 
 function showTimer(miliSec) {
   displayDOM.textContent = formatDisplay(miliSec);
@@ -82,8 +106,6 @@ function formatDisplay(miliSec) {
 function padWithZero(n) {
   return n < 10 ? `0${n}` : n;
 }
-
-addEventListeners();
 
 
 // module.exports = {
