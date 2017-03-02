@@ -3,10 +3,9 @@ const {
   pad,
   formatDisplay,
   startTimer,
-  runTimer,
-  stopTimer,
   resetTimer
 } = require('../../public/assets/js/app');
+
 
 describe('getCurrentMs', () => {
   test('returns truthy value', () => {
