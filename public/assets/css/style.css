@@ -13,7 +13,9 @@ html {
 body {
   display: flex;
   justify-content: center;
+  align-items: center;
   /*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";*/
+  background: linear-gradient(to top right, #ddd, #fff);
   font-family: 'Droid Sans Mono', monospace;
   font-weight: 100;
   color: #555;
@@ -23,15 +25,23 @@ body {
 
 .app {
   background-color: rgb(32, 147, 78);
-  /*border: 1px solid red;*/
+  height: 100%;
   width: 100%;
+  box-shadow: -10px 10px 20px 0px rgba(0,0,0,0.2);
+}
+
+@media screen and (min-width: 48em) {
+  .app {
+    width: 34em;
+    height: 80%;
+  }
 }
 
 .display {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid green;
+  /*border: 2px solid blue;*/
   height: 90%;
 }
 
@@ -91,7 +101,7 @@ body {
   color: white;
   border: 1px solid rgb(24, 112, 59);
   font-size: 1.2rem;
-  outline: none;
+  outline: 0;
   cursor: pointer;
 }
 
@@ -101,15 +111,10 @@ body {
   }
 }
 
-.controls__btn:hover {
-  outline: none;
-}
-
-.controls__btn:focus {
-  outline: none;
-}
-
 .controls__btn:active {
-  outline: none;
+  background-color: rgb(24, 112, 59);
+}
+
+.controls__btn--focus {
   background-color: rgb(24, 112, 59);
 }
