@@ -11,7 +11,7 @@ let passedTime = 0;
 // *******************************************************************
 // Control
 // *******************************************************************
-function startTimer() {
+function startTimer(runTimer, getCurrentMs) {
   if (isRunning) { return; }
   isRunning = true;
   startTime = getCurrentMs() - passedTime;
@@ -33,7 +33,7 @@ function stopTimer() {
 }
 
 
-function resetTimer() {
+function resetTimer(stopTimer, showTimer) {
   stopTimer();
   passedTime = 0;
   startTime = 0;
@@ -58,9 +58,9 @@ const resetDOM = document.querySelector('.controls__btn--reset');
 
   const controlsDOM = document.querySelector('.controls');
 
-  startDOM.addEventListener('click', startTimer);
+  startDOM.addEventListener('click', startTimer.bind(null, runTimer, getCurrentMs));
   stopDOM.addEventListener('click', stopTimer);
-  resetDOM.addEventListener('click', resetTimer);
+  resetDOM.addEventListener('click', resetTimer.bind(null, stopTimer, showTimer));
 
   ['focusin', 'focusout', 'mouseover'].forEach(event => {
     if (event === 'mouseover') {
@@ -194,8 +194,12 @@ function handleUnknownTranscript() {
 
 
 
-// module.exports = {
-//   sum,
-//   multiply,
-//   addOneAsyncWithCallback
-// };
+module.exports = {
+  getCurrentMs,
+  pad,
+  formatDisplay,
+  startTimer,
+  runTimer,
+  stopTimer,
+  resetTimer
+};
