@@ -4,7 +4,7 @@
 // *******************************************************************
 let isRunning = false;
 let animationRequestId;
-let startTime = 0;
+let startTime;
 let passedTime = 0;
 
 
@@ -64,7 +64,7 @@ const resetDOM = document.querySelector('.controls__btn--reset');
 
   ['focusin', 'focusout', 'mouseover'].forEach(event => {
     if (event === 'mouseover') {
-      controlsDOM.addEventListener(event, removeFocus, { once: true });
+      controlsDOM.addEventListener(event, removeFocus);
     } else {
       controlsDOM.addEventListener(event, handleFocus);
     }
@@ -73,8 +73,7 @@ const resetDOM = document.querySelector('.controls__btn--reset');
 
 
 function handleFocus(e) {
-  console.log('focus');
-  if (e.target.nodeName === 'BUTTON'); {
+  if (e.target.nodeName === 'BUTTON') {
     e.target.classList.toggle('controls__btn--focus');
   }
 }
@@ -84,6 +83,9 @@ function removeFocus(e) {
   this.removeEventListener('focusin', handleFocus);
   this.removeEventListener('focusout', handleFocus);
 }
+
+
+
 
 
 const timeDisplayDOM = document.querySelector('.display__time');
@@ -172,6 +174,7 @@ function showOnSpeech(button) {
 
 
 const currentText = new SpeechSynthesisUtterance();
+
 
 function handleUnknownTranscript() {
   const potentialAnswers = [
