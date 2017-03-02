@@ -4,7 +4,7 @@
 // *******************************************************************
 let isRunning = false;
 let animationRequestId;
-let startTime = 0;
+let startTime;
 let passedTime = 0;
 
 
@@ -15,14 +15,14 @@ function startTimer() {
   if (isRunning) { return; }
   isRunning = true;
   startTime = getCurrentMs() - passedTime;
-  runTimer();
+  return runTimer();
 }
 
 
 function runTimer() {
   passedTime = getCurrentMs() - startTime;
   showTimer(passedTime);
-  animationRequestId = window.requestAnimationFrame(runTimer);
+  return animationRequestId = window.requestAnimationFrame(runTimer);
 }
 
 
@@ -30,12 +30,10 @@ function stopTimer() {
   if (!isRunning) { return; }
   isRunning = false;
   window.cancelAnimationFrame(animationRequestId);
-  animationRequestId = undefined;
 }
 
 
 function resetTimer() {
-  if (!isRunning) { return; }
   stopTimer();
   passedTime = 0;
   startTime = 0;
@@ -52,20 +50,21 @@ function getCurrentMs() {
 // *******************************************************************
 // View
 // *******************************************************************
+const startDOM = document.querySelector('.controls__btn--start');
+const stopDOM = document.querySelector('.controls__btn--stop');
+const resetDOM = document.querySelector('.controls__btn--reset');
+
 (function addEventListeners() {
-  const startDOM = document.querySelector('.controls__btn--start');
-  const pauseDOM = document.querySelector('.controls__btn--pause');
-  const resetDOM = document.querySelector('.controls__btn--reset');
 
   const controlsDOM = document.querySelector('.controls');
 
   startDOM.addEventListener('click', startTimer);
-  pauseDOM.addEventListener('click', stopTimer);
+  stopDOM.addEventListener('click', stopTimer);
   resetDOM.addEventListener('click', resetTimer);
 
   ['focusin', 'focusout', 'mouseover'].forEach(event => {
     if (event === 'mouseover') {
-      controlsDOM.addEventListener(event, removeEvent, { once: true });
+      controlsDOM.addEventListener(event, removeFocus);
     } else {
       controlsDOM.addEventListener(event, handleFocus);
     }
@@ -74,23 +73,25 @@ function getCurrentMs() {
 
 
 function handleFocus(e) {
-  console.log('focus');
-  if (e.target.nodeName === 'BUTTON'); {
+  if (e.target.nodeName === 'BUTTON') {
     e.target.classList.toggle('controls__btn--focus');
   }
 }
 
 
-function removeEvent(e) {
+function removeFocus(e) {
   this.removeEventListener('focusin', handleFocus);
   this.removeEventListener('focusout', handleFocus);
 }
 
 
-const displayDOM = document.querySelector('.display__time');
+
+
+
+const timeDisplayDOM = document.querySelector('.display__time');
 
 function showTimer(miliSec) {
-  displayDOM.textContent = formatDisplay(miliSec);
+  timeDisplayDOM.textContent = formatDisplay(miliSec);
 }
 
 
@@ -99,13 +100,98 @@ function formatDisplay(miliSec) {
   const sec      = Math.floor((miliSec / 1000) % 60);
   const min      = Math.floor((miliSec / (1000 * 60)) % 60);
   const hour     = Math.floor((miliSec / (1000 * 60 * 60)) % 100);
-  return `${padWithZero(hour)}:${padWithZero(min)}:${padWithZero(sec)}.${padWithZero(centiSec)}`;
+  return `${pad(hour)}:${pad(min)}:${pad(sec)}.${pad(centiSec)}`;
 }
 
 
-function padWithZero(n) {
+function pad(n) {
   return n < 10 ? `0${n}` : n;
 }
+
+
+
+// *******************************************************************
+// Speech
+// *******************************************************************
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.interimResults = true;
+
+
+recognition.start();
+recognition.addEventListener('end', recognition.start);
+
+
+recognition.addEventListener('result', e => {
+  const transcript = Array.from(e.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join('');
+
+  if (e.results[0].isFinal) {
+    handleSpeech(transcript);
+  }
+});
+
+
+function handleSpeech(transcript) {
+  console.log(transcript);
+  switch (transcript) {
+    case 'start':
+    case 'begin':
+    case 'go':
+    case 'let\'s go':
+      startTimer();
+      showOnSpeech(startDOM);
+      break;
+    case 'stop':
+    case 'pause':
+    case 'break':
+      stopTimer();
+      showOnSpeech(stopDOM);
+      break;
+    case 'reset':
+    case 'end':
+    case 'finish':
+      resetTimer();
+      showOnSpeech(resetDOM);
+      break;
+    case 'thank you':
+      timeDisplayDOM.textContent = '🌻 🌼 🌸 🌺 🍀';
+      break;
+    default:
+      handleUnknownTranscript();
+  }
+}
+
+
+function showOnSpeech(button) {
+  button.classList.toggle('controls__btn--focus');
+  setTimeout(() => {
+    button.classList.toggle('controls__btn--focus');
+  }, 200);
+}
+
+
+const currentText = new SpeechSynthesisUtterance();
+
+
+function handleUnknownTranscript() {
+  const potentialAnswers = [
+    'Could you repeat this please?',
+    'Sorry, I didn\t catch this',
+    'I\'m not 100% sure what you meant'
+  ];
+  currentText.text = potentialAnswers[Math.floor(Math.random() * potentialAnswers.length)];
+  speechSynthesis.cancel();
+  speechSynthesis.speak(currentText);
+}
+
+
+
+
+
+
 
 
 // module.exports = {
