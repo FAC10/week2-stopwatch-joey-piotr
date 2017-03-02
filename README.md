@@ -1,11 +1,20 @@
 # Stopwatch with Voice Control
 
-A practical stopwatch to get the job done. Perfect for every timing situation including cooking, sports, games and work tasks. The app can also be operated with voice.
+A practical stopwatch to get the job done. Perfect for every timing situation including cooking, sports, games and work tasks. The app can also be operated with voice (only in Chrome).
 
-Examnple commands:
--f
--f
--
+Example commands:
+
+#####Start
+
+'start', 'begin', 'go', 'let's go'
+
+#####Stop
+
+'stop', 'pause', 'break'
+
+#####Reset
+
+'reset', 'end', 'finish'
 
 Live version: https://fac10.github.io/week2-stopwatch-joey-piotr/
 
