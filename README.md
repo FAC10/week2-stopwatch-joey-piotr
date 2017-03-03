@@ -101,6 +101,7 @@ describe('pad', () => {
 ```
 
 
+
 <!-- ***************************************************** -->
 ## Request Animation Frame (Joey)
 
@@ -112,11 +113,45 @@ describe('pad', () => {
 <!-- ***************************************************** -->
 ## Web Speech API (Piotr)
 
-- The Web Speech API enables you to incorporate voice data into web apps. The Web Speech API has two parts: SpeechSynthesis (Text-to-Speech), and SpeechRecognition (Asynchronous Speech Recognition).
+- The [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) enables you to incorporate voice data into web apps. The Web Speech API has two parts: SpeechSynthesis (Text-to-Speech), and SpeechRecognition (Asynchronous Speech Recognition).
 - [Learn it with Wes Bos' by taking JavaScript Challenge #20](https://javascript30.com/)
 
 
+```javascript
+// Check if you have access to SpeechRecognition API in your browser
+if (!('webkitSpeechRecognition' in window)) {
+  console.log('...Sorry, Web Speech API not supported by your browser :(');
+} else {
+  // Find SpeechRecognition function on the window object
+  var SpeechRecognition = window.SpeechRecognition;
 
+  // Instantiate object that will manage speech recognition
+  var recognition = new SpeechRecognition();
+
+  // Pick the settings that you like
+  recognition.interimResults = true;  // Access results instantly
+  recognition.lang = "en-US";
+}
+
+
+// Start listening
+recognition.start();
+// Keep listening :)
+recognition.addEventListener('end', recognition.start);
+
+
+// Handle results
+recognition.addEventListener('result', e => {
+  // Find the text in the event object
+  var transcript = Array.from(e.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join('');
+
+  // Have fun with the text :)
+  haveFun(transcript);
+});
+```
 
 
 <!-- ***************************************************** -->
