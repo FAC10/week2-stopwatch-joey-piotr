@@ -21,6 +21,18 @@ Example commands:
 <img src="./src/graphics/screencast.gif" width="275px" height="auto">
 
 <!-- ***************************************************** -->
+##Stopwatch specification
+
+ - I can press a start button, in order to start a timer
+ - I can press a stop button, in order to stop the timer at how much time has passed since start
+ - I can press a reset button, in order to stop the timer and reset the displayed time to 00:00:00:00
+ - I can see the timer's current time in hours, seconds, minutes and milliseconds
+
+ ###Stretch goals
+ - Voice Control
+ - Countdown functionality
+
+<!-- ***************************************************** -->
 ## Getting started
 
 ```sh
