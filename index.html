@@ -11,7 +11,22 @@
 </head>
 <body>
 
+  <svg style="position: absolute; width: 0; height: 0; overflow: hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+      <symbol id="icon-mic" viewBox="0 0 32 32">
+        <title>mic</title>
+        <path d="M15 22c2.761 0 5-2.239 5-5v-12c0-2.761-2.239-5-5-5s-5 2.239-5 5v12c0 2.761 2.239 5 5 5zM22 14v3c0 3.866-3.134 7-7 7s-7-3.134-7-7v-3h-2v3c0 4.632 3.5 8.447 8 8.944v4.056h-4v2h10v-2h-4v-4.056c4.5-0.497 8-4.312 8-8.944v-3h-2z"></path>
+      </symbol>
+    </def>
+  </svg>
+
+
   <main class="app">
+
+    <section class="voice__control">
+      <svg class="voice__btn"><use xlink:href="#icon-mic"></use></svg>
+    </section>
+
     <section class="display">
       <div class="display__clock">
         <div class="display__wrapper">
@@ -19,12 +34,19 @@
         </div>
       </div>
     </section>
+
     <section class="controls">
       <button class="controls__btn controls__btn--start">START</button>
       <button class="controls__btn controls__btn--stop">STOP</button>
       <button class="controls__btn controls__btn--reset">RESET</button>
     </section>
+
   </main>
+
+
+  <!-- For speech recognition demo purposes only, hidden on mobile -->
+  <p class="speech-demo"></p>
+
 
   <script src="public/assets/js/app.js"></script>
   <script src="public/assets/js/view.js"></script>
