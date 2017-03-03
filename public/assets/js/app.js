@@ -15,14 +15,14 @@ function startTimer(runTimer, getCurrentMs) {
   if (isRunning) { return; }
   isRunning = true;
   startTime = getCurrentMs() - passedTime;
-  return runTimer();
+  runTimer();
 }
 
 
 function runTimer() {
   passedTime = getCurrentMs() - startTime;
   showTimer(passedTime);
-  return animationRequestId = window.requestAnimationFrame(runTimer);
+  animationRequestId = window.requestAnimationFrame(runTimer);
 }
 
 
