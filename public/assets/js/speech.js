@@ -8,8 +8,35 @@ const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 
 
-recognition.start();
-recognition.addEventListener('end', recognition.start);
+let isRecognitionActive = false;
+voiceButtonDOM = document.querySelector('.voice__btn');
+speechDemoDOM = document.querySelector('.speech-demo');
+voiceButtonDOM.addEventListener('click', toggleRecognition);
+
+
+function toggleRecognition() {
+  isRecognitionActive = !isRecognitionActive;
+  voiceButtonDOM.classList.toggle('voice__btn--active');
+
+  if (isRecognitionActive) {
+    recognition.start();
+    recognition.addEventListener('end', recognition.start);
+  } else {
+    recognition.removeEventListener('end', recognition.start);
+    recognition.stop();
+    toggleSpeechDemo();
+  }
+}
+
+
+function toggleSpeechDemo() {
+  speechDemoDOM.style.opacity = '0';
+  setTimeout(() => {
+    showSpeech('');
+    speechDemoDOM.style.opacity = '1';
+  }, 1000);
+}
+
 
 recognition.addEventListener('result', e => {
   let transcript = Array.from(e.results)
@@ -25,13 +52,10 @@ recognition.addEventListener('result', e => {
 });
 
 
-speechDemoDOM = document.querySelector('.speech-demo');
-
 function showSpeech(transcript) {
   speechDemoDOM.textContent = transcript;
   speechDemoDOM.scrollTop = speechDemoDOM.scrollTop + 400;
 }
-
 
 const startCommands = ['start', 'begin', 'go'];
 const stopCommands  = ['stop', 'break', 'pause'];

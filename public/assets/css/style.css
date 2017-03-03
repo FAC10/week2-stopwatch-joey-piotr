@@ -23,6 +23,7 @@ body {
 }
 
 .app {
+  position: relative;
   background-color: rgb(32, 147, 78);
   height: 100%;
   width: 100%;
@@ -34,6 +35,31 @@ body {
     width: 30em;
     height: 80%;
   }
+}
+
+.voice__control {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 1.4rem;
+  left: 0.9rem;
+}
+
+.voice__btn {
+  display: inline-block;
+  width: 3.4rem;
+  height: 3.4rem;
+  stroke-width: 1;
+  fill: rgba(24, 112, 59, 1);
+  cursor: pointer;
+  transition: 0.3s ease;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.voice__btn--active {
+  transform: scale(1.2);
+  fill: white;
 }
 
 .display {
@@ -140,7 +166,10 @@ body {
     width: 80%;
     padding: 1rem;
     font-size: 1.8rem;
-    height: 9%;
+    height: 8%;
     overflow: scroll;
+    transition: opacity 0.5s ease-in-out;
   }
 }
+
+.speech-demo
