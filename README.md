@@ -72,7 +72,7 @@ npm install jest-cli --save-dev
 ```
 
 
-### How to use Jest?
+### How to use Jest? (Joey)
 
 ```javascript
 
@@ -104,8 +104,29 @@ describe('pad', () => {
 <!-- ***************************************************** -->
 ## Request Animation Frame (Joey)
 
-- requestAnimationFrame vs setInterval / setTimeout
-- tracking time using JS Date object
+- The window.requestAnimationFrame() method tells the browser that you want to perform an animation and requests that the browser call a specified function to update the animation.
+- We call this method within our `runTimer()` function in order to update the value shown on the stopwatch. The number of callbacks is usually 60 times per second. `runTimer()` is called again within `window.requestAnimationFrame()` to keep updating the stopwatch value.
+
+```javascript
+// showTimer() is the function that displays the time on the stopwatch
+// passedTime is the variable that tracks how much time has passed since the stopwatch was started
+
+var animationRequestId;
+
+function runTimer() {
+  showTimer(passedTime);
+  animationRequestId = window.requestAnimationFrame(runTimer);
+}
+
+function stopTimer() {
+  window.cancelAnimationFrame(animationRequestId);
+}
+```
+- We used this method because it means that the animation code is only called when the user's browser is ready to make changes to the screen, resulting in a smoother animation and a more efficient use of resources.
+- We then used `Date.now()` to accurately keep track of time.
+- [window.requestAnimationFrame() MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
+- [Animating with javascript from setInterval to requestAnimationFrame](https://hacks.mozilla.org/2011/08/animating-with-javascript-from-setinterval-to-requestanimationframe/)
+- [Understanding JavaScript's requestAnimationFrame() method for smooth animations](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
 
 
 
