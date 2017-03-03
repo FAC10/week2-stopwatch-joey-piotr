@@ -147,7 +147,7 @@ function stopTimer() {
 ## Web Speech API (Piotr)
 
 - The [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) enables you to incorporate voice data into web apps. The Web Speech API has two parts: SpeechSynthesis (Text-to-Speech), and SpeechRecognition (Asynchronous Speech Recognition).
-- [Learn it with Wes Bos' by taking JavaScript Challenge #20](https://javascript30.com/)
+- [Learn it with Wes Bos by taking JavaScript Challenge #20](https://javascript30.com/)
 
 
 ```javascript
