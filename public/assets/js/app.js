@@ -2,9 +2,10 @@
 // State
 // *******************************************************************
 let isRunning = false;
-let animationRequestId;
 let startTime;
 let passedTime = 0;
+let animationRequestId;
+
 
 
 // *******************************************************************
@@ -81,7 +82,6 @@ function formatDisplay(miliSec) {
 function pad(n) {
   return n < 10 ? `0${n}` : n;
 }
-
 
 
 module.exports = {

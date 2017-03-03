@@ -43,7 +43,7 @@ describe('pad', () => {
 
 describe('formatDisplay', () => {
   test('returns string', () => {
-    expect(typeof formatDisplay()).toBe('string');
+    expect(typeof formatDisplay(0)).toBe('string');
   });
 
   test('returns string with length 11', () => {
